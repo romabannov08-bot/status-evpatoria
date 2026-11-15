@@ -20,7 +20,7 @@ nav{display:flex;gap:28px;font-weight:600;font-size:15px;color:#cfd8d3}nav a:hov
 #scene{height:950vh;position:relative}.stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000;-webkit-transform:translateZ(0);transform:translateZ(0);backface-visibility:hidden}
 .stick video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;-webkit-transform:translateZ(0);transform:translateZ(0);backface-visibility:hidden;transition:opacity .4s ease;will-change:opacity}#v2{opacity:0}
 .stick #mob-cvs{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;-webkit-transform:translateZ(0);transform:translateZ(0);backface-visibility:hidden}
-.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,9,8,.8),rgba(7,9,8,.1) 65%),linear-gradient(0deg,rgba(7,9,8,.75),transparent 45%),var(--kitchen-plan) right -14vw bottom -12vw / min(66vw,890px) auto no-repeat}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,9,8,.8),rgba(7,9,8,.1) 65%),linear-gradient(0deg,rgba(7,9,8,.75),transparent 45%)}
 .st{position:absolute;left:clamp(20px,5vw,72px);bottom:clamp(64px,12vh,120px);max-width:min(780px,90vw);opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform;pointer-events:none}
 .st.on{opacity:1;transform:none;pointer-events:auto}
 .st small{display:block;color:var(--ac);letter-spacing:.22em;font-weight:600;font-size:13px;margin-bottom:14px}
@@ -673,21 +673,23 @@ footer{padding:28px clamp(20px,5vw,72px) calc(28px + env(safe-area-inset-bottom,
 :root {
   --cabinet-elevation:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20550%22%20fill%3D%22none%22%20stroke%3D%22%2357796c%22%20stroke-width%3D%221%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cg%20opacity%3D%22.38%22%3E%3Cpath%20d%3D%22M49%20502H581M69%2082H564M101%2065V114m424-49v49M68%20115V474m514-359V474M101%20475V517m424-42v42M69%20129H94m-25%20323h25m436-323h52m-52%20323h52%22%2F%3E%3Cpath%20d%3D%22M94%2089l14-14m410%2014l14-14M94%20509l14-14m410%2014l14-14M61%20136l14-14m-14%20338l14-14m500-310l14-14m-14%20338l14-14%22%2F%3E%3C%2Fg%3E%0A%3Cg%20opacity%3D%22.67%22%3E%3Cpath%20d%3D%22M101%20129H525V453H101zM101%20145H525M101%20433H525M196%20145V433M438%20145V433M101%20258H196m242%2048h87M196%20258h242m-242%2012h242m-242%2048h242m-242%2010h242M196%20152h242v75H196zM276%20152v75m81-75v75M249%20328v105m67-105v105m65-105v105M438%20202h87m-87%2016h87m-76%204h65v70h-65z%22%2F%3E%3Cpath%20d%3D%22M450%20239h63m-56%2013h49v32h-49zM109%20155h78v97h-78zm0%20111h78v158h-78zM455%20325v29m0%2014v46M209%20356h29m-29%2038h29m29-38h31m-31%2038h31m32-38h31m-31%2038h31m33-38h31m-31%2038h31M221%20218h29m52%200h29m52%200h29m-293-19v31m53%2067v32%22%2F%3E%3C%2Fg%3E%0A%3Cg%20opacity%3D%22.32%22%20stroke-dasharray%3D%225%204%22%3E%3Cpath%20d%3D%22M59%20318H576M196%20113V473M438%20113V473M99%20129l92%20126m-92%200l92-126m252%20194l78%20108m-78%200l78-108%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E");
   --kitchen-plan:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20650%20500%22%20fill%3D%22none%22%20stroke%3D%22%2357796c%22%20stroke-width%3D%221%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cg%20opacity%3D%22.7%22%3E%3Cpath%20d%3D%22M101%20119H540v313H101V119Zm16%2016h407v281H117V135ZM117%20135h407v70H117zM117%20205h71v211h-71zM188%20135v70m72-70v70m70-70v70m66-70v70m63-70v70m-342%2072h71m-71%2070h71M268%20282h173v69H268zM282%20295h145v43H282z%22%2F%3E%3Crect%20x%3D%22271%22%20y%3D%22149%22%20width%3D%2247%22%20height%3D%2240%22%20rx%3D%223%22%2F%3E%3Ccircle%20cx%3D%22294%22%20cy%3D%22169%22%20r%3D%225%22%2F%3E%3Cpath%20d%3D%22M405%20148h46v45h-46zM410%20153h36v35h-36zM128%20285h49v49h-49z%22%2F%3E%3Ccircle%20cx%3D%22141%22%20cy%3D%22298%22%20r%3D%225%22%2F%3E%3Ccircle%20cx%3D%22164%22%20cy%3D%22298%22%20r%3D%225%22%2F%3E%3Ccircle%20cx%3D%22141%22%20cy%3D%22321%22%20r%3D%225%22%2F%3E%3Ccircle%20cx%3D%22164%22%20cy%3D%22321%22%20r%3D%225%22%2F%3E%3C%2Fg%3E%0A%3Cg%20opacity%3D%22.38%22%3E%3Cpath%20d%3D%22M80%2095H561M101%2073v37m439-37v37M72%20130v298m508-298v298M54%20135h37m-37%20281h37m459-281h49m-49%20281h49M252%20382h205m-189-24v42m173-42v42%22%2F%3E%3Cpath%20d%3D%22M95%20101l12-12m427%2012l12-12M65%20142l14-14m-14%20294l14-14m494-266l14-14m-14%20294l14-14M262%20388l12-12m161%2012l12-12%22%2F%3E%3C%2Fg%3E%3Cg%20opacity%3D%22.32%22%20stroke-dasharray%3D%225%205%22%3E%3Cpath%20d%3D%22M224%20247h260v139H224zM98%20168h445M353%20252v127%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+  --island-perspective:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20490%22%20fill%3D%22none%22%20stroke%3D%22%23648878%22%20stroke-width%3D%221%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cg%20opacity%3D%22.62%22%3E%3Cpath%20d%3D%22M86%20185l202-78%20280%2089-202%2083zM86%20185v11l280%2094%20202-83v-11M101%20201v121l265%2092%20188-81V214M366%20290v124M190%20231v122m88-92v123M101%20249l265%2092%20188-78M101%20282l265%2093%20188-79M430%20265v121m65-148v120M190%20158l90%2030%2074-27-91-30zM204%20158l76%2025%2060-22-77-25zM272%20151l17%206m-9-3%205-17%2015-5%208%203%22%2F%3E%3Cpath%20d%3D%22M126%20236l35%2012m54%2019l36%2012m52%2018l35%2012m62-8%2020-9m28-12%2024-10m44-19%2018-8M126%20270l35%2012m54%2019l36%2012m52%2018l35%2012M126%20303l35%2012m54%2019l36%2012m52%2018l35%2012%22%2F%3E%3C%2Fg%3E%0A%3Cg%20opacity%3D%22.34%22%3E%3Cpath%20d%3D%22M62%20327l304%20106%20230-99M64%20178l226-88%20304%2097M86%20131v41m281%20235v44m201-276v22M58%20321l10%2013m291%2093%2015%2010m215-108%2012%2010M277%2086l20%206%22%2F%3E%3Cpath%20stroke-dasharray%3D%225%205%22%20d%3D%22M83%20360l206-80%20284%2091M289%2079v32M67%20202l296%20106%20224-90%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+  --galley-plan:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20490%22%20fill%3D%22none%22%20stroke%3D%22%23648878%22%20stroke-width%3D%221%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cg%20opacity%3D%22.60%22%3E%3Cpath%20d%3D%22M80%20105h480v270H80zM96%20121h448v238H96zM96%20121h448v66H96zM96%20293h448v66H96zM164%20121v66m70-66v66m70-66v66m70-66v66m70-66v66m50-66v66M147%20293v66m73-66v66m72-66v66m74-66v66m85-66v66M307%20132h59v45h-59zM315%20138h43v32h-43zM472%20304h42v43h-42z%22%2F%3E%3Ccircle%20cx%3D%22484%22%20cy%3D%22316%22%20r%3D%225%22%2F%3E%3Ccircle%20cx%3D%22503%22%20cy%3D%22316%22%20r%3D%225%22%2F%3E%3Ccircle%20cx%3D%22484%22%20cy%3D%22335%22%20r%3D%225%22%2F%3E%3Ccircle%20cx%3D%22503%22%20cy%3D%22335%22%20r%3D%225%22%2F%3E%3Cpath%20d%3D%22M87%20206v72m465-72v72M108%20177h42m25%200h45m24%200h47M113%20304h20m30%200h42m31%200h42m32%200h42%22%2F%3E%3C%2Fg%3E%0A%3Cg%20opacity%3D%22.30%22%3E%3Cpath%20d%3D%22M80%2078h480M80%2062v42m480-42v42M52%20121v238m-12-238h36m-36%20238h36M587%20187v106m-23-106h38m-38%20106h38M74%2084l12-12m468%2012%2012-12M46%20127l12-12m-12%20250%2012-12m523-160%2012-12m-12%20118%2012-12%22%2F%3E%3Cpath%20stroke-dasharray%3D%226%206%22%20d%3D%22M72%20240h496M320%2073v317M95%20202h449m-449%2078h449%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+  --u-kitchen-plan:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20490%22%20fill%3D%22none%22%20stroke%3D%22%23648878%22%20stroke-width%3D%221%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cg%20opacity%3D%22.64%22%3E%3Cpath%20d%3D%22M82%20110h476v268H82zM99%20127h442v234H99zM99%20127h442v69H99zM99%20196h72v165H99zM469%20196h72v165h-72zM171%20127v69m65-69v69m84-69v69m83-69v69m66-69v69m-370%2061h72m-72%2053h72m298-56h72m-72%2053h72M251%20138h55v45h-55zM258%20143h41v34h-41zM484%20269h42v31h-42z%22%2F%3E%3Ccircle%20cx%3D%22494%22%20cy%3D%22277%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%22515%22%20cy%3D%22277%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%22494%22%20cy%3D%22291%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%22515%22%20cy%3D%22291%22%20r%3D%224%22%2F%3E%3Cpath%20d%3D%22M257%20264h126v49H257zM240%20272h17v32h-17zM383%20272h17v32h-17zM279%20245h32v19h-32zm52%200h32v19h-32zm-52%2068h32v19h-32zm52%200h32v19h-32z%22%2F%3E%3C%2Fg%3E%0A%3Cg%20opacity%3D%22.33%22%3E%3Cpath%20d%3D%22M83%2080h475M82%2064v46m476-46v46M52%20110v268m-15-268h39m-39%20268h39M170%20410h300m-300-37v50m300-50v50M77%2085l12-12m463%2012%2012-12M46%20116l12-12m-12%20280%2012-12M164%20416l12-12m288%2012%2012-12%22%2F%3E%3Cpath%20stroke-dasharray%3D%226%205%22%20d%3D%22M320%2073v329M74%20288h492M182%20198v171m276-171v171%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E");
 }
 #work {
-  background:var(--cabinet-elevation) left -150px top 10px / min(66vw,820px) auto no-repeat,
-             var(--kitchen-plan) right -155px bottom 10px / min(60vw,720px) auto no-repeat,
+  background:var(--island-perspective) right -138px top -140px / min(66vw,820px) auto no-repeat,
+             var(--galley-plan) left -155px bottom 10px / min(60vw,720px) auto no-repeat,
              linear-gradient(180deg,#070908,#0b1813 38%,#070908);
 }
 #cta {
   background:radial-gradient(ellipse at 50% 46%,#0c1913 0%,#0c1913e8 32%,transparent 75%),
-             var(--kitchen-plan) left -150px bottom -14px / min(65vw,850px) auto no-repeat,
-             var(--cabinet-elevation) right -172px top -24px / min(60vw,730px) auto no-repeat,
+             var(--u-kitchen-plan) left -228px top -46px / min(65vw,850px) auto no-repeat,
              linear-gradient(155deg,#070908,#102019);
 }
 #calc-banner-sec,
 footer {
-  background:var(--kitchen-plan) right -96px center / min(70vw,540px) auto no-repeat;
+  background:var(--galley-plan) right -96px center / min(70vw,540px) auto no-repeat;
 }
 .calc-banner {
   background:linear-gradient(90deg,#101814 12%,#101814ef 56%,#10181446),
@@ -696,11 +698,11 @@ footer {
 @media (max-width:760px) {
   #work {
     background-size:450px auto,390px auto,auto;
-    background-position:left -250px top 10px,right -202px bottom 0,center;
+    background-position:right -240px top -62px,left -202px bottom 0,center;
   }
   #cta {
-    background-size:auto,420px auto,370px auto,auto;
-    background-position:center,left -230px bottom 0,right -212px top 12px,center;
+    background-size:auto,420px auto,auto;
+    background-position:center,left -244px top 24px,center;
   }
 }
 </style></head><body id="top">
