@@ -1169,17 +1169,7 @@ function loadStage2Video(){
   if(IS_MOBILE && MOB_CTX) return;
   if(stage2VideoLoaded || !V2) return;
   stage2VideoLoaded = true;
-  const { localSrc, cdnSrc } = pickVideoSources(V2);
-  const isGitHubPages = /\.github\.io$/i.test(location.hostname);
-  if (location.protocol === 'file:' || !isGitHubPages) {
-    attachOptimizedVideo(V2, localSrc);
-    return;
-  }
-  fetchVideoBlobWithCache(V2).then(url => {
-    if (url) attachOptimizedVideo(V2, url);
-  }).catch(() => {
-    attachOptimizedVideo(V2, cdnSrc || localSrc);
-  });
+  attachOptimizedVideo(V2, V2.dataset.src);
 }
 
 // ===== MOBILE ZERO-LATENCY WEBP SPRITE ATLAS ENGINE =====
@@ -1686,21 +1676,8 @@ function startDesktopVideos(onPct, onReady){
       if(onReady) onReady();
     }, {once: true});
 
-    const { localSrc, cdnSrc } = pickVideoSources(V1);
-    const isGitHubPages = /\.github\.io$/i.test(location.hostname);
-    if (location.protocol === 'file:' || !isGitHubPages) {
-      attachOptimizedVideo(V1, localSrc);
-      setTimeout(() => { if (!stage2VideoLoaded) loadStage2Video(); }, 180);
-    } else {
-      fetchVideoBlobWithCache(V1, pct => {
-        if (onPct) onPct(pct);
-      }).then(url => {
-        attachOptimizedVideo(V1, url || cdnSrc || localSrc);
-      }).catch(() => {
-        attachOptimizedVideo(V1, cdnSrc || localSrc);
-      });
-      setTimeout(() => { if (!stage2VideoLoaded) loadStage2Video(); }, 180);
-    }
+    attachOptimizedVideo(V1, V1.dataset.src);
+    setTimeout(() => { if (!stage2VideoLoaded) loadStage2Video(); }, 180);
   }
 }
 
