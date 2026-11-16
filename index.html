@@ -1187,6 +1187,7 @@ const MOB_MAX_DECODED = 5;
 const mobBlobs = new Map();
 const mobDecoded = new Map();
 const mobFetching = new Set();
+const mobFetchControllers = new Map();
 const mobFetchRetryAt = new Map();
 const mobDecoding = new Set();
 let mobFocusSheet = 0;
@@ -1280,7 +1281,7 @@ function storeDecodedMobSheet(idx, bmp) {
   mobRedrawNow = true;
 }
 
-async function fetchMobSheetBlob(idx) {
+async function fetchMobSheetBlob(idx, signal) {
   const name = mobSheetName(idx);
   const localUrl = MOB_ATLAS_CDN + name + '?v=9';
   const cdnUrl = MOB_ATLAS_CDN + name;
@@ -1301,7 +1302,7 @@ async function fetchMobSheetBlob(idx) {
   const urls = isGitHubPages ? [localUrl, cdnUrl] : [localUrl];
   for (const url of urls) {
     try {
-      const res = await fetch(url, { mode: url.startsWith('http') ? 'cors' : 'same-origin' });
+      const res = await fetch(url, { mode: url.startsWith('http') ? 'cors' : 'same-origin', signal });
       if (!res.ok) continue;
       const blob = await res.blob();
       if (!blob || blob.size < 1024) continue;
@@ -1312,7 +1313,7 @@ async function fetchMobSheetBlob(idx) {
         } catch (_) {}
       }
       return blob;
-    } catch (_) {}
+    } catch (_) { if (signal && signal.aborted) return null; }
   }
   return null;
 }
@@ -1385,6 +1386,7 @@ function mobPumpQueue() {
   while (mobActiveFetch < 4) {
     let bestIdx = -1, bestScore = 1e9;
     for (let i = 0; i < MOB_TOTAL_SHEETS; i++) {
+      if (Math.abs(i - mobFocusSheet) > 5) continue;
       if (mobBlobs.has(i) || mobFetching.has(i) || (mobFetchRetryAt.get(i) || 0) > now) continue;
       // Держим первый лист второго ролика в запасе заранее.
       const isNextVideo = mobFocusSheet < MOB_S1_COUNT && i === MOB_S1_COUNT;
@@ -1394,15 +1396,18 @@ function mobPumpQueue() {
     if (bestIdx < 0) break;
     mobFetching.add(bestIdx);
     mobActiveFetch++;
-    fetchMobSheetBlob(bestIdx).then(blob => {
+    const controller = new AbortController();
+    mobFetchControllers.set(bestIdx, controller);
+    fetchMobSheetBlob(bestIdx, controller.signal).then(blob => {
       if (blob) {
         mobBlobs.set(bestIdx, blob);
         mobFetchRetryAt.delete(bestIdx);
-      } else {
+      } else if (!controller.signal.aborted) {
         mobFetchRetryAt.set(bestIdx, performance.now() + 2500);
       }
     }).finally(() => {
       mobFetching.delete(bestIdx);
+      mobFetchControllers.delete(bestIdx);
       mobActiveFetch--;
       mobPumpQueue();
     });
@@ -1430,6 +1435,9 @@ function drawMobAtlasFrame(stage, time) {
 
   if (sheetIdx !== mobFocusSheet) {
     mobFocusSheet = sheetIdx;
+    for (const [idx, controller] of mobFetchControllers) {
+      if (Math.abs(idx - sheetIdx) > 5) controller.abort();
+    }
     mobPumpQueue();
   } else if (!mobDecoded.has(sheetIdx)) {
     mobPumpQueue();
@@ -1439,18 +1447,25 @@ function drawMobAtlasFrame(stage, time) {
     return;
   }
 
-  const bmp = mobDecoded.get(sheetIdx);
+  let bmp = mobDecoded.get(sheetIdx), drawIdx = localIdx;
   if (!bmp) {
     window.__mobStats.misses++;
-    return;
+    let nearest = -1, distance = Infinity;
+    for (const idx of mobDecoded.keys()) {
+      const d = Math.abs(idx - sheetIdx);
+      if (d < distance) { nearest = idx; distance = d; }
+    }
+    if (nearest < 0 || distance > 4) return;
+    bmp = mobDecoded.get(nearest);
+    drawIdx = nearest < sheetIdx ? MOB_PER_SHEET - 1 : 0;
   }
 
   const t0 = performance.now();
-  const col = localIdx % MOB_COLS, row = Math.floor(localIdx / MOB_COLS);
+  const col = drawIdx % MOB_COLS, row = Math.floor(drawIdx / MOB_COLS);
   drawMobCoverSource(bmp, col * MOB_TILE_W, row * MOB_TILE_H, MOB_TILE_W, MOB_TILE_H);
   const drawMs = performance.now() - t0;
 
-  mobLastDrawnSheet = sheetIdx;
+  mobLastDrawnSheet = bmp === mobDecoded.get(sheetIdx) ? sheetIdx : -1;
   mobLastDrawnLocal = localIdx;
   mobRedrawNow = false;
   const st = window.__mobStats;
